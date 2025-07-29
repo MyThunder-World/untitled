@@ -1,1 +1,851 @@
-# untitled
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKELA Media Works - Showcase Your Story</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #0a0a0a;
+            color: #ffffff;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #4ecdc4;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #ffffff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.6);
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* News Section */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+
+        .news-date {
+            color: #ff6b6b;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .news-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Creator Gallery */
+        .creator-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .creator-type-card {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .creator-type-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.2);
+        }
+
+        .creator-type-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        /* Featured Creator */
+        .featured-creator {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .creator-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .creator-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .creator-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .creator-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars {
+            color: #ffd700;
+        }
+
+        .creator-badge {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* Portfolio */
+        .portfolio-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .portfolio-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #4ecdc4;
+        }
+
+        .portfolio-budget {
+            color: #ff6b6b;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            border-color: #4ecdc4;
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #4ecdc4;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Reviews Section */
+        .reviews-summary {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .reviews-average {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+        }
+
+        .review-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 3rem 0 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #4ecdc4;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #4ecdc4;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: flex;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.2rem;
+            }
+            
+            .creator-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">SKELA</div>
+            <ul class="nav-links">
+                <li><a href="#showcases">Showcases</a></li>
+                <li><a href="#creators">Creators</a></li>
+                <li><a href="#music">Music</a></li>
+                <li><a href="#cinema">Cinema</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#signin" class="btn btn-secondary">SIGN IN</a>
+                <a href="#getstarted" class="btn btn-primary">GET STARTED</a>
+            </div>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Showcase Your Story</h1>
+            <p class="hero-tagline">Create Your Moment</p>
+            <p class="hero-subtitle">Be the first to meet the world of creators!</p>
+            <p class="hero-subtitle">New series will be launched by the end of this month</p>
+            <a href="#preview" class="btn btn-primary">Preview the Premiere →</a>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="section" id="news">
+        <div class="container">
+            <h2 class="section-title">Latest Updates</h2>
+            <div class="news-grid">
+                <div class="news-card slide-up">
+                    <div class="news-date">AUGUST 1, 2025</div>
+                    <h3 class="news-title">Faster Than Parachutes Tease New Album Cover</h3>
+                    <p class="news-description">Share snippets of press reviews and media mentions on your page to highlight your brand's credibility. Influencer and online reviews work, too!</p>
+                    <a href="#" class="btn btn-primary">Read More →</a>
+                </div>
+                <div class="news-card slide-up">
+                    <div class="news-date">DECEMBER 6, 2024</div>
+                    <h3 class="news-title">Faster Than Parachutes Wins Best New Album</h3>
+                    <p class="news-description">Share snippets of press reviews and media mentions on your page to highlight your brand's credibility. Influencer and online reviews work, too!</p>
+                    <a href="#" class="btn btn-primary">Read More →</a>
+                </div>
+                <div class="news-card slide-up">
+                    <div class="news-date">JUNE 15, 2024</div>
+                    <h3 class="news-title">Freedom Tour Kicks Off in August</h3>
+                    <p class="news-description">Share snippets of press reviews and media mentions on your page to highlight your brand's credibility. Influencer and online reviews work, too!</p>
+                    <a href="#" class="btn btn-primary">Read More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Creator Gallery -->
+    <section class="section" id="creators">
+        <div class="container">
+            <h2 class="section-title">The Creator Gallery</h2>
+            
+            <div class="creator-types">
+                <div class="creator-type-card">
+                    <div class="creator-type-icon">🎬</div>
+                    <h3>Film Creators</h3>
+                    <p>Visual storytelling experts creating compelling narratives</p>
+                    <a href="#" class="btn btn-primary">Explore →</a>
+                </div>
+                <div class="creator-type-card">
+                    <div class="creator-type-icon">🎵</div>
+                    <h3>Music Artists</h3>
+                    <p>Musicians and sound engineers crafting amazing audio experiences</p>
+                    <a href="#" class="btn btn-primary">Explore →</a>
+                </div>
+                <div class="creator-type-card">
+                    <div class="creator-type-icon">✨</div>
+                    <h3>VFX & Animation</h3>
+                    <p>Digital artists bringing imagination to life</p>
+                    <a href="#" class="btn btn-primary">Explore →</a>
+                </div>
+            </div>
+
+            <!-- Featured Creator -->
+            <div class="featured-creator">
+                <div class="creator-header">
+                    <div class="creator-avatar">K</div>
+                    <div class="creator-info">
+                        <h3>KANNAN</h3>
+                        <div class="creator-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>4.9 (2,000 reviews)</span>
+                        </div>
+                        <p>TAMIL NADU • LEVEL 2</p>
+                        <div class="creator-badge">Skela's Choice</div>
+                    </div>
+                </div>
+                
+                <div class="creator-description">
+                    <h4>About this creator</h4>
+                    <p>Are you looking for high-quality and reliable video editing services to achieve your business or personal goals? Look no further! I am a professional video editor with 6 years of experience creating compelling videos for brands like Unilever, Netcore, Haier, and smrtPhone.</p>
+                    
+                    <h4>What working with me is like:</h4>
+                    <ul>
+                        <li>Fast turnaround time</li>
+                        <li>Client-Centric Approach</li>
+                        <li>Collaborative Process</li>
+                        <li>Clear Communication</li>
+                    </ul>
+                </div>
+
+                <div class="portfolio-item">
+                    <h4 class="portfolio-title">HAVOC</h4>
+                    <p>After a drug deal gone wrong, a bruised detective must fight his way through the criminal underworld to rescue a politician's estranged son, unravelling a deep web of corruption and conspiracy that ensnares his entire city.</p>
+                    <p class="portfolio-budget">Budget: $30 million • Duration: 1 Year</p>
+                    <p>5+ More projects in portfolio</p>
+                </div>
+
+                <a href="#" class="btn btn-primary">Invite to Project</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Service Packages</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="pricing-title">Basic</h3>
+                    <div class="pricing-price">₹2,999</div>
+                    <ul class="pricing-features">
+                        <li>Video Editing</li>
+                        <li>Basic Color Correction</li>
+                        <li>2 Revisions</li>
+                        <li>3-5 Day Delivery</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Choose Plan</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Most Popular</div>
+                    <h3 class="pricing-title">Premium</h3>
+                    <div class="pricing-price">₹4,488</div>
+                    <ul class="pricing-features">
+                        <li>Advanced Video Editing</li>
+                        <li>Color Grading</li>
+                        <li>Intro/Outro</li>
+                        <li>Music & Sound</li>
+                        <li>5 Revisions</li>
+                        <li>2-3 Day Delivery</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Choose Plan</a>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="pricing-title">Professional</h3>
+                    <div class="pricing-price">₹7,999</div>
+                    <ul class="pricing-features">
+                        <li>Full Post-Production</li>
+                        <li>VFX & Animation</li>
+                        <li>Custom Graphics</li>
+                        <li>Unlimited Revisions</li>
+                        <li>1-2 Day Delivery</li>
+                        <li>Source Files Included</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Choose Plan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="section" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Reviews</h2>
+            <div class="reviews-summary">
+                <div class="reviews-average">4.9</div>
+                <div class="stars">★★★★★</div>
+                <p>Based on 2,000+ reviews</p>
+            </div>
+            
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-name">Sarah Johnson</div>
+                        <div class="review-date">April 23, 2025</div>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                    <p>"Exceptional work quality and fast delivery. Kannan understood exactly what I needed for my project."</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-name">Mike Chen</div>
+                        <div class="review-date">April 20, 2025</div>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                    <p>"Professional service with great attention to detail. Highly recommend for video editing projects."</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-name">Emma Wilson</div>
+                        <div class="review-date">April 18, 2025</div>
+                    </div>
+                    <div class="stars">★★★★☆</div>
+                    <p>"Great communication throughout the project. The final result exceeded my expectations."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Top Shows</h4>
+                    <ul>
+                        <li><a href="#">Wild Robot</a></li>
+                        <li><a href="#">Havoc</a></li>
+                        <li><a href="#">Freedom Tour</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Top Albums</h4>
+                    <ul>
+                        <li><a href="#">Faster Than Parachutes</a></li>
+                        <li><a href="#">New Releases</a></li>
+                        <li><a href="#">Featured Artists</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:hello@skelamedia.com">hello@skelamedia.com</a></li>
+                        <li><a href="#">Management: KNJ Label</a></li>
+                        <li><a href="#">Booking: Blue Samurai Productions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Get Social</h4>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SKELA Media Works. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.slide-up, .news-card, .creator-type-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this
