@@ -121,6 +121,18 @@
         }
 
         .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.08) rotate(-2deg);
+        }
+
+        .logo-main {
             font-size: 2.8rem;
             font-weight: 800;
             background: var(--gradient-primary);
@@ -128,12 +140,23 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -0.08em;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            line-height: 0.9;
         }
 
-        .logo:hover {
-            transform: scale(1.08) rotate(-2deg);
+        .logo-sub {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--medium-gray);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: -0.2rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover .logo-sub {
+            color: var(--primary-coral);
+            opacity: 1;
         }
 
         .nav-menu {
@@ -754,47 +777,59 @@
             transform: translateX(0);
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
+        /* Mobile Navigation Menu */
+        .nav-menu.mobile-menu {
+            position: fixed;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+        }
 
-            .hero h1 {
-                font-size: 3.5rem;
-            }
+        .nav-menu.mobile-menu.active {
+            transform: translateY(-100vh);
+            opacity: 1;
+            visibility: visible;
+        }
 
-            .hero p {
-                font-size: 1.3rem;
-            }
+        .nav-menu.mobile-menu a {
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
 
-            .hero-cta {
-                flex-direction: column;
-                gap: 1rem;
-            }
+        .nav-menu.mobile-menu a:hover {
+            background: rgba(255, 107, 107, 0.1);
+            transform: scale(1.05);
+        }
 
-            .featured-content {
-                grid-template-columns: 1fr;
-                gap: 4rem;
-            }
+        .mobile-auth-buttons {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+            width: 80%;
+            max-width: 300px;
+        }
 
-            .container {
-                padding: 0 1.5rem;
-            }
-
-            .creator-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-            }
+        .mobile-auth-buttons .btn {
+            width: 100%;
+            justify-content: center;
+            padding: 1.2rem 2rem;
+            font-size: 1rem;
         }
 
         .mobile-toggle {
@@ -802,20 +837,327 @@
             flex-direction: column;
             cursor: pointer;
             padding: 0.5rem;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-toggle:hover {
+            transform: scale(1.1);
         }
 
         .mobile-toggle span {
             width: 28px;
             height: 3px;
             background: var(--dark);
-            margin: 4px 0;
-            transition: 0.3s;
+            margin: 3px 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 2px;
         }
 
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Enhanced Mobile Responsiveness */
         @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            /* Header mobile optimizations */
+            nav {
+                padding: 1rem 0;
+            }
+
+            .logo-main {
+                font-size: 2.2rem;
+            }
+
+            .logo-sub {
+                font-size: 0.65rem;
+            }
+
+            .nav-menu:not(.mobile-menu) {
+                display: none;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
             .mobile-toggle {
                 display: flex;
+            }
+
+            /* Hero section mobile optimizations */
+            .hero {
+                min-height: 90vh;
+                padding: 6rem 0 4rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.5rem, 12vw, 3.5rem);
+                margin-bottom: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-quote {
+                font-size: 1rem;
+                padding: 1rem 0 1rem 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-cta .btn {
+                width: 100%;
+                padding: 1.2rem 2rem;
+                font-size: 1rem;
+            }
+
+            /* Section spacing mobile optimizations */
+            .workshop-section,
+            .featured-section {
+                padding: 6rem 0;
+            }
+
+            .stats-section {
+                padding: 5rem 0;
+            }
+
+            .section-header {
+                margin: 0 auto 4rem;
+            }
+
+            .section-title {
+                font-size: clamp(2rem, 8vw, 2.8rem);
+                margin-bottom: 1.5rem;
+            }
+
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+
+            /* Creator cards mobile optimizations */
+            .creator-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin-top: 3rem;
+            }
+
+            .creator-card {
+                padding: 2.5rem 2rem;
+                border-radius: 20px;
+            }
+
+            .creator-card:hover {
+                transform: translateY(-10px) scale(1.02);
+            }
+
+            .creator-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 3rem;
+                margin-bottom: 2rem;
+            }
+
+            .creator-card h3 {
+                font-size: 1.6rem;
+                margin-bottom: 1rem;
+            }
+
+            .creator-card p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            /* Featured section mobile optimizations */
+            .featured-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .featured-info h3 {
+                font-size: 2.5rem;
+            }
+
+            .featured-rating {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .skills-list li {
+                padding: 0.8rem 0;
+                font-size: 1rem;
+            }
+
+            .project-showcase {
+                padding: 2rem;
+                border-radius: 20px;
+            }
+
+            .project-image {
+                height: 200px;
+                font-size: 1.4rem;
+                margin-bottom: 2rem;
+            }
+
+            /* Stats section mobile optimizations */
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .stat-item {
+                padding: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2.8rem;
+            }
+
+            .stat-label {
+                font-size: 1rem;
+            }
+
+            /* Footer mobile optimizations */
+            footer {
+                padding: 4rem 0 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .footer-section h4 {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .footer-section p,
+            .footer-section a {
+                font-size: 1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .footer-bottom {
+                padding-top: 2rem;
+                font-size: 0.9rem;
+            }
+
+            /* Button improvements for mobile */
+            .btn {
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .btn:active {
+                transform: translateY(-2px) scale(0.98);
+            }
+
+            /* Particle optimization for mobile */
+            .particles {
+                opacity: 0.3;
+            }
+
+            /* Scroll optimization */
+            .fade-in,
+            .slide-in-left, 
+            .slide-in-right {
+                transform: translateY(30px);
+            }
+
+            .fade-in.visible,
+            .slide-in-left.visible,
+            .slide-in-right.visible {
+                transform: translateY(0);
+            }
+        }
+
+        /* Tablet optimizations */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .creator-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.8rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-quote {
+                font-size: 0.9rem;
+                padding: 0.8rem 0 0.8rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .creator-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .creator-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+
+            .featured-info h3 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
             }
         }
     </style>
@@ -826,12 +1168,25 @@
 
     <header id="header">
         <nav class="container">
-            <div class="logo">SKELA</div>
+            <div class="logo">
+                <div class="logo-main">SKELA</div>
+                <div class="logo-sub">media works</div>
+            </div>
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#workshops">Workshops</a></li>
                 <li><a href="#creators">Creators</a></li>
                 <li><a href="#showcase">Showcase</a></li>
+            </ul>
+            <ul class="nav-menu mobile-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#workshops">Workshops</a></li>
+                <li><a href="#creators">Creators</a></li>
+                <li><a href="#showcase">Showcase</a></li>
+                <div class="mobile-auth-buttons">
+                    <a href="#" class="btn btn-outline">Sign In</a>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
             </ul>
             <div class="auth-buttons">
                 <a href="#" class="btn btn-outline">Sign In</a>
@@ -1041,75 +1396,151 @@
             }
         }
 
-        // Enhanced header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            const scrolled = window.pageYOffset > 100;
-            
-            if (scrolled) {
-                header.classList.add('header-scrolled');
-            } else {
-                header.classList.remove('header-scrolled');
-            }
-        });
+        // Enhanced mobile menu functionality
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const navMenu = document.querySelector('.nav-menu.mobile-menu');
+        const body = document.body;
+        
+        if (mobileToggle && navMenu) {
+            mobileToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                mobileToggle.classList.toggle('active');
+                body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            });
 
-        // Enhanced scroll animations
+            // Close mobile menu when clicking on links
+            const mobileLinks = navMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                    body.style.overflow = '';
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                    body.style.overflow = '';
+                }
+            });
+        }
+
+        // Optimize animations for mobile
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+
+        // Reduce particle count on mobile for better performance
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = isMobile() ? 12 : 25;
+            
+            // Clear existing particles
+            particlesContainer.innerHTML = '';
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Smaller particles on mobile
+                const size = isMobile() ? Math.random() * 3 + 2 : Math.random() * 5 + 3;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random position
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // Slower animations on mobile
+                const duration = isMobile() ? 
+                    (Math.random() * 15 + 20) + 's' : 
+                    (Math.random() * 10 + 15) + 's';
+                
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = duration;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Throttle scroll events for better performance
+        let ticking = false;
+        
+        function throttledScrollHandler() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    // Header scroll effect
+                    const header = document.getElementById('header');
+                    const scrolled = window.pageYOffset > 50;
+                    
+                    if (scrolled) {
+                        header.classList.add('header-scrolled');
+                    } else {
+                        header.classList.remove('header-scrolled');
+                    }
+                    
+                    // Scroll animations
+                    animateOnScroll();
+                    
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        // Enhanced scroll animations with mobile optimization
         function animateOnScroll() {
             const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+            const threshold = isMobile() ? 50 : 150;
             
             elements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
                 
-                if (elementTop < window.innerHeight - elementVisible) {
+                if (elementTop < window.innerHeight - threshold) {
                     element.classList.add('visible');
                 }
             });
         }
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerHeight = document.getElementById('header').offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
+        // Touch-friendly hover effects for mobile
+        function setupTouchInteractions() {
+            if (isMobile()) {
+                const cards = document.querySelectorAll('.creator-card, .project-showcase');
+                
+                cards.forEach(card => {
+                    card.addEventListener('touchstart', function() {
+                        this.style.transform = this.classList.contains('creator-card') 
+                            ? 'translateY(-10px) scale(1.02)' 
+                            : 'translateY(-8px) scale(1.01)';
                     });
-                }
-            });
-        });
-
-        // Enhanced counter animation for stats
-        function animateCounters() {
-            const counters = document.querySelectorAll('.stat-number');
-            
-            counters.forEach(counter => {
-                const target = counter.textContent;
-                const numericTarget = parseInt(target.replace(/[^0-9]/g, ''));
-                const suffix = target.replace(/[0-9]/g, '');
-                let current = 0;
-                const increment = numericTarget / 100;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= numericTarget) {
-                        counter.textContent = target;
-                        clearInterval(timer);
-                    } else {
-                        counter.textContent = Math.floor(current) + suffix;
-                    }
-                }, 30);
-            });
+                    
+                    card.addEventListener('touchend', function() {
+                        setTimeout(() => {
+                            this.style.transform = 'translateY(0) scale(1)';
+                        }, 150);
+                    });
+                });
+            }
         }
 
-        // Initialize when page loads
+        // Resize handler to recreate particles and update interactions
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                createParticles();
+                setupTouchInteractions();
+            }, 250);
+        });
+
+        // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             animateOnScroll();
+            setupTouchInteractions();
             
             // Animate counters when stats section comes into view
             const statsSection = document.querySelector('.stats-section');
@@ -1120,6 +1551,8 @@
                         observer.unobserve(entry.target);
                     }
                 });
+            }, {
+                threshold: isMobile() ? 0.3 : 0.5
             });
             
             if (statsSection) {
@@ -1127,36 +1560,8 @@
             }
         });
 
-        // Scroll event listener
-        window.addEventListener('scroll', animateOnScroll);
-
-        // Add interactive hover effects for cards
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.creator-card, .project-showcase');
-            
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = this.classList.contains('creator-card') 
-                        ? 'translateY(-25px) scale(1.03)' 
-                        : 'translateY(-15px) scale(1.02)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
-        });
-
-        // Enhanced mobile menu functionality
-        const mobileToggle = document.querySelector('.mobile-toggle');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        if (mobileToggle && navMenu) {
-            mobileToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-                mobileToggle.classList.toggle('active');
-            });
-        }
+        // Use throttled scroll handler
+        window.addEventListener('scroll', throttledScrollHandler);
     </script>
 </body>
 </html>
